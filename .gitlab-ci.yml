@@ -21,6 +21,7 @@ storybook:
     paths:
       - storybook-static/
   script:
+    - yarn
     - yarn build-storybook
 
 deploy-storybook:
@@ -30,7 +31,6 @@ deploy-storybook:
   environment:
     name: storybook
     url: $PAGES_URL
-    on_stop: remove-storybook
   only:
     - main
 
@@ -41,10 +41,10 @@ pages:
     paths:
       - public
   script:
-    - mkdir -p public;
-    - touch public/index.html;
-    - echo "<!DOCTYPE HTML><script>window.location.href = '$PAGES_URL'</script>" > public/index.html;
-    - mkdir -p "public";
+    - mkdir -p public
+    - touch public/index.html
+    - echo "<!DOCTYPE HTML><script>window.location.href = '$PAGES_URL'</script>" > public/index.html
+    - mkdir -p "public"
     - mv storybook-static "public"
   artifacts:
     paths:
