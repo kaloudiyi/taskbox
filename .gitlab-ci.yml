@@ -8,10 +8,8 @@ pages:
   script:
     - yarn
     - yarn build-storybook
-    - cd ../
-    - cp -R ./page ./storybook-static
   artifacts:
     paths:
-      - public
+      - storybook-static
   only:
     - main
