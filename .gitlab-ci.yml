@@ -1,0 +1,15 @@
+image: node:12.10.0
+cache:
+  paths:
+    - node_modules/
+    - .cache/
+    - public/
+pages:
+  script:
+    - yarn
+    - yarn build-storybook
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
