@@ -1,15 +1,51 @@
 image: node:14
-cache:
-  paths:
-    - node_modules/
-    - .cache/
-    - public/
-pages:
+
+stages:
+  - build-and-test
+  - deployment
+  - pages
+
+variables:
+  PAGES_URL: "https://kloudiyi.gitlab.io/test-storybook/storybook/"
+
+build:
+  stage: build-and-test
   script:
-    - yarn
-    - yarn build-storybook
+    - echo "Nothing to build or test"
+
+storybook:
+  stage: build-and-test
   artifacts:
+    expire_in: 2 weeks
+    when: always
     paths:
-      - storybook-static
+      - storybook-static/
+  script:
+    - yarn build-storybook
+
+deploy-storybook:
+  stage: deployment
+  script:
+    - echo "This job configures an environment."
+  environment:
+    name: storybook
+    url: $PAGES_URL
+    on_stop: remove-storybook
   only:
     - main
+
+pages:
+  stage: pages
+  cache:
+    key: "sp-storybook"
+    paths:
+      - public
+  script:
+    - mkdir -p public;
+    - touch public/index.html;
+    - echo "<!DOCTYPE HTML><script>window.location.href = '$PAGES_URL'</script>" > public/index.html;
+    - mkdir -p "public";
+    - mv storybook-static "public"
+  artifacts:
+    paths:
+      - public
