@@ -30,7 +30,6 @@ deploy-storybook:
   environment:
     name: storybook
     url: $PAGES_URL
-    on_stop: remove-storybook
   only:
     - main
 
