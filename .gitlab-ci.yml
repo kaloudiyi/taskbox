@@ -1,4 +1,4 @@
-image: node:12.10.0
+image: node:latest
 cache:
   paths:
     - node_modules/
